@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Menu, X, Search, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 import logo from '@/assets/logo.png';
 import {
   DropdownMenu,
@@ -67,25 +68,33 @@ export function Header() {
   const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-40 w-full border border-amber-100/50 bg-white/95 backdrop-blur-lg supports-[backdrop-filter]:bg-white/90 rounded-b-xl shadow-[0_4px_20px_rgba(245,158,11,0.2)] hover:shadow-[0_6px_25px_rgba(245,158,11,0.25)] transition-all duration-300">
-      <div className="container mx-auto px-4 py-1">
-        <div className="flex h-20 items-center justify-between">
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="sticky top-0 z-40 w-full border-b border-amber-200/60 bg-[#fffbf2]/95 backdrop-blur-xl supports-[backdrop-filter]:bg-[#fffbf2]/80 rounded-b-[2rem] shadow-[0_4px_20px_rgba(245,158,11,0.1)] hover:shadow-[0_8px_30px_rgba(245,158,11,0.15)] transition-all duration-500 overflow-hidden"
+    >
+      {/* Shimmer Effect */}
+      <div className="absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-amber-100/20 to-transparent pointer-events-none" />
+
+      <div className="container mx-auto px-6 py-2 relative z-10">
+        <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="rounded-full p-1.5 bg-gradient-to-br from-amber-100 to-amber-200 shadow-lg border-2 border-amber-300 hover:shadow-xl hover:shadow-amber-200/50 transition-all duration-300 transform hover:scale-105">
-              <img 
-                src={logo} 
-                alt="Bhagavad Gita Logo" 
-                className="h-14 w-14 rounded-full object-cover border-2 border-white shadow-inner"
+            <div className="rounded-full p-1 bg-gradient-to-br from-amber-100 to-amber-200 shadow-md border border-amber-300 hover:shadow-lg hover:shadow-amber-200/50 transition-all duration-300 transform hover:scale-105">
+              <img
+                src={logo}
+                alt="Bhagavad Gita Logo"
+                className="h-10 w-10 rounded-full object-cover border border-white shadow-inner"
               />
             </div>
-            <span className="ml-3 text-xl font-bold bg-gradient-to-r from-amber-700 to-amber-500 bg-clip-text text-transparent">
+            <span className="ml-3 text-lg font-bold bg-gradient-to-r from-amber-800 to-amber-600 bg-clip-text text-transparent tracking-wide">
               BHAGAVAD GITA
             </span>
           </div>
-          
+
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 flex-1 ml-12">
+          <nav className="hidden lg:flex items-center gap-2 flex-1 ml-12">
             {/* Search Icon */}
             <button className="p-2 hover:bg-amber-50 hover:shadow-sm rounded-lg transition-all duration-200 mr-4 border border-transparent hover:border-amber-200">
               <Search className="w-5 h-5 text-amber-700" />
@@ -94,14 +103,14 @@ export function Header() {
             {navSections.map((section) =>
               section.hasDropdown ? (
                 <DropdownMenu key={section.label}>
-                  <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus:outline-none">
+                  <DropdownMenuTrigger className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-amber-700 hover:bg-amber-50/50 rounded-md transition-all duration-200 focus:outline-none">
                     {section.label}
                     <ChevronDown className="w-4 h-4" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="min-w-[180px]">
+                  <DropdownMenuContent align="start" className="min-w-[180px] animate-in fade-in-80 zoom-in-95">
                     {section.items?.map((item) => (
                       <DropdownMenuItem key={item.label} asChild>
-                        <a href={item.href} className="cursor-pointer">
+                        <a href={item.href} className="cursor-pointer hover:bg-amber-50 hover:text-amber-700 focus:bg-amber-50 focus:text-amber-700">
                           {item.label}
                         </a>
                       </DropdownMenuItem>
@@ -112,11 +121,10 @@ export function Header() {
                 <a
                   key={section.label}
                   href={section.href}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
-                    section.active
-                      ? 'text-saffron'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${section.active
+                      ? 'text-saffron bg-saffron/10 shadow-sm'
+                      : 'text-muted-foreground hover:text-amber-700 hover:bg-amber-50/50'
+                    }`}
                 >
                   {section.label}
                 </a>
@@ -168,9 +176,8 @@ export function Header() {
                       >
                         {section.label}
                         <ChevronDown
-                          className={`w-4 h-4 transition-transform ${
-                            expandedMobileSection === section.label ? 'rotate-180' : ''
-                          }`}
+                          className={`w-4 h-4 transition-transform ${expandedMobileSection === section.label ? 'rotate-180' : ''
+                            }`}
                         />
                       </button>
                       {expandedMobileSection === section.label && (
@@ -191,11 +198,10 @@ export function Header() {
                   ) : (
                     <a
                       href={section.href}
-                      className={`block px-4 py-3 text-sm font-medium transition-colors ${
-                        section.active
+                      className={`block px-4 py-3 text-sm font-medium transition-colors ${section.active
                           ? 'text-saffron bg-saffron/10'
                           : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                      }`}
+                        }`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {section.label}
@@ -207,6 +213,6 @@ export function Header() {
           </nav>
         )}
       </div>
-    </header>
+    </motion.header>
   );
 }

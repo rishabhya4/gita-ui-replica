@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { Header } from './Header';
 import { HeroBanner } from './HeroBanner';
 import { ControlBar } from './ControlBar';
@@ -55,7 +56,7 @@ export function GitaReader({ bannerImage }: GitaReaderProps) {
     try {
       const versesData = await fetchVerses(chapterId);
       setVerses(versesData);
-      
+
       // Scroll to verses section after loading
       setTimeout(() => {
         document.getElementById('verses-section')?.scrollIntoView({
@@ -85,39 +86,46 @@ export function GitaReader({ bannerImage }: GitaReaderProps) {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      <main>
+
+      <motion.main
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        className="flex flex-col gap-8"
+      >
         <HeroBanner bannerImage={bannerImage} />
-        
-        <ControlBar
-          fontSize={fontSize}
-          onFontSizeChange={setFontSize}
-          onToggleProjectorMode={handleToggleProjectorMode}
-          isProjectorMode={isProjectorMode}
-        />
-        
-        <ChapterGrid
-          chapters={chapters}
-          selectedChapterId={selectedChapter?.id ?? null}
-          onSelectChapter={handleSelectChapter}
-          isLoading={isLoadingChapters}
-        />
-        
-        <VersesTable
-          verses={verses}
-          chapter={selectedChapter}
-          fontSize={fontSize}
-          isLoading={isLoadingVerses}
-        />
-        
-        <AudioPlayer
-          chapter={selectedChapter}
-          audioUrl={audioUrl}
-        />
-      </main>
-      
+
+        <div className="space-y-12 pb-16">
+          <ControlBar
+            fontSize={fontSize}
+            onFontSizeChange={setFontSize}
+            onToggleProjectorMode={handleToggleProjectorMode}
+            isProjectorMode={isProjectorMode}
+          />
+
+          <ChapterGrid
+            chapters={chapters}
+            selectedChapterId={selectedChapter?.id ?? null}
+            onSelectChapter={handleSelectChapter}
+            isLoading={isLoadingChapters}
+          />
+
+          <VersesTable
+            verses={verses}
+            chapter={selectedChapter}
+            fontSize={fontSize}
+            isLoading={isLoadingVerses}
+          />
+
+          <AudioPlayer
+            chapter={selectedChapter}
+            audioUrl={audioUrl}
+          />
+        </div>
+      </motion.main>
+
       <Footer />
-      
+
       <ProjectorMode
         isOpen={isProjectorMode}
         onClose={() => setIsProjectorMode(false)}
