@@ -1,4 +1,5 @@
 import type { Chapter } from '@/data/gitaData';
+import gitaBanner from '@/assets/gita-banner.jpg';
 
 interface ChapterCardProps {
   chapter: Chapter;
@@ -9,9 +10,7 @@ interface ChapterCardProps {
 export function ChapterCard({ chapter, isSelected, onSelect }: ChapterCardProps) {
   return (
     <div
-      className={`chapter-card cursor-pointer ${
-        isSelected ? 'ring-2 ring-primary ring-offset-2' : ''
-      }`}
+      className="diamond-card-wrapper"
       onClick={() => onSelect(chapter.id)}
       role="button"
       tabIndex={0}
@@ -23,42 +22,34 @@ export function ChapterCard({ chapter, isSelected, onSelect }: ChapterCardProps)
       }}
       aria-pressed={isSelected}
     >
-      {/* Chapter Number Badge */}
-      <div className="absolute top-4 right-4 w-10 h-10 rounded-full gradient-saffron flex items-center justify-center">
-        <span className="text-sm font-bold text-primary-foreground">
-          {chapter.number}
-        </span>
-      </div>
-
-      {/* Chapter Content */}
-      <div className="relative z-10 pr-12">
-        <h3 className="font-heading text-lg font-semibold text-foreground mb-1">
-          {chapter.title}
-        </h3>
-        <p className="sanskrit-text text-sm mb-2">
-          {chapter.transliteration}
-        </p>
-        <p className="text-xs text-muted-foreground mb-3">
-          {chapter.verseCount} verses
-        </p>
-
-        {/* Sanskrit Title */}
-        <div className="font-heading text-lg text-saffron-dark mb-4">
-          {chapter.sanskritTitle}
+      <div
+        className={`diamond-card ${
+          isSelected ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''
+        }`}
+      >
+        {/* Background Image */}
+        <div className="diamond-card-image">
+          <img
+            src={gitaBanner}
+            alt={chapter.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         </div>
 
-        {/* Open Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect(chapter.id);
-          }}
-          className={`btn-saffron text-xs px-4 py-1.5 ${
-            isSelected ? 'opacity-90' : ''
-          }`}
-        >
-          {isSelected ? 'Selected' : 'Open'}
-        </button>
+        {/* Chapter Number */}
+        <div className="diamond-card-number">
+          <span className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
+            {chapter.number}
+          </span>
+        </div>
+
+        {/* Bottom Text */}
+        <div className="diamond-card-text">
+          <p className="text-[8px] md:text-[10px] text-white/80 leading-tight text-center px-2 line-clamp-2">
+            {chapter.transliteration}
+          </p>
+        </div>
       </div>
     </div>
   );
