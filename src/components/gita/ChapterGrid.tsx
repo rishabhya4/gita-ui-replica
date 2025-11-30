@@ -16,13 +16,13 @@ export function ChapterGrid({
 }: ChapterGridProps) {
   if (isLoading) {
     return (
-      <section className="py-8">
+      <section className="py-12 bg-gradient-to-b from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            {Array.from({ length: 10 }).map((_, i) => (
               <div
                 key={i}
-                className="h-44 rounded-lg bg-muted animate-pulse"
+                className="w-24 h-24 md:w-32 md:h-32 rotate-45 rounded-lg bg-muted animate-pulse"
               />
             ))}
           </div>
@@ -32,9 +32,9 @@ export function ChapterGrid({
   }
 
   return (
-    <section className="py-8">
+    <section className="py-12 bg-gradient-to-b from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-12">
           {chapters.map((chapter, index) => (
             <div
               key={chapter.id}
