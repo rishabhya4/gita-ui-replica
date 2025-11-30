@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Menu, X, Search, ChevronDown } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -66,25 +67,28 @@ export function Header() {
   const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-40 w-full border border-amber-100/50 bg-white/95 backdrop-blur-lg supports-[backdrop-filter]:bg-white/90 rounded-b-xl shadow-[0_4px_20px_rgba(245,158,11,0.2)] hover:shadow-[0_6px_25px_rgba(245,158,11,0.25)] transition-all duration-300">
+      <div className="container mx-auto px-4 py-1">
+        <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-3">
-              {/* Om Symbol with Infinity */}
-              <div className="relative">
-                <span className="text-3xl font-heading text-saffron">ॐ</span>
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-lg text-teal-600">∞</span>
-              </div>
+          <div className="flex items-center">
+            <div className="rounded-full p-1.5 bg-gradient-to-br from-amber-100 to-amber-200 shadow-lg border-2 border-amber-300 hover:shadow-xl hover:shadow-amber-200/50 transition-all duration-300 transform hover:scale-105">
+              <img 
+                src={logo} 
+                alt="Bhagavad Gita Logo" 
+                className="h-14 w-14 rounded-full object-cover border-2 border-white shadow-inner"
+              />
             </div>
+            <span className="ml-3 text-xl font-bold bg-gradient-to-r from-amber-700 to-amber-500 bg-clip-text text-transparent">
+              BHAGAVAD GITA
+            </span>
           </div>
-
+          
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1 flex-1 ml-12">
             {/* Search Icon */}
-            <button className="p-2 hover:bg-muted rounded-lg transition-colors mr-4">
-              <Search className="w-5 h-5 text-muted-foreground" />
+            <button className="p-2 hover:bg-amber-50 hover:shadow-sm rounded-lg transition-all duration-200 mr-4 border border-transparent hover:border-amber-200">
+              <Search className="w-5 h-5 text-amber-700" />
             </button>
 
             {navSections.map((section) =>

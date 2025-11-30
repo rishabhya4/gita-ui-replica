@@ -1,5 +1,5 @@
 import type { Chapter } from '@/data/gitaData';
-import gitaBanner from '@/assets/gita-banner.jpg';
+import bookCard from '@/assets/Book Card.png';
 
 interface ChapterCardProps {
   chapter: Chapter;
@@ -15,7 +15,7 @@ export function ChapterCard({ chapter, isSelected, onSelect, onPreview }: Chapte
 
   return (
     <div
-      className="diamond-card-wrapper"
+      className="relative w-32 h-40 md:w-36 md:h-44 bg-white rounded-lg overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.2)] transition-all duration-300 cursor-pointer hover:-translate-y-1"
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -27,31 +27,29 @@ export function ChapterCard({ chapter, isSelected, onSelect, onPreview }: Chapte
       }}
       aria-pressed={isSelected}
     >
-      <div
-        className={`diamond-card ${
-          isSelected ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''
-        }`}
-      >
-        {/* Background Image */}
-        <div className="diamond-card-image">
+      <div className={`relative w-full h-full ${isSelected ? 'ring-2 ring-amber-500 ring-offset-2' : ''}`}>
+        {/* Book Card Image */}
+        <div className="absolute inset-0">
           <img
-            src={gitaBanner}
+            src={bookCard}
             alt={chapter.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         </div>
 
+        {/* Overlay for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
         {/* Chapter Number */}
-        <div className="diamond-card-number">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <span className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">
             {chapter.number}
           </span>
         </div>
 
-        {/* Bottom Text */}
-        <div className="diamond-card-text">
-          <p className="text-[9px] md:text-xs text-white/90 leading-tight text-center px-3 line-clamp-1 font-medium">
+        {/* Chapter Title */}
+        <div className="absolute bottom-2 left-0 right-0">
+          <p className="text-xs text-white text-center font-medium px-2 line-clamp-2">
             {chapter.transliteration}
           </p>
         </div>
