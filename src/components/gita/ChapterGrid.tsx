@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { ChapterCard } from './ChapterCard';
+import { ChapterModal } from './ChapterModal';
 import type { Chapter } from '@/data/gitaData';
 
 interface ChapterGridProps {
@@ -14,15 +16,28 @@ export function ChapterGrid({
   onSelectChapter,
   isLoading,
 }: ChapterGridProps) {
+  const [previewChapter, setPreviewChapter] = useState<Chapter | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePreview = (chapter: Chapter) => {
+    setPreviewChapter(chapter);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setPreviewChapter(null);
+  };
+
   if (isLoading) {
     return (
-      <section className="py-12 bg-gradient-to-b from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
+      <section className="py-16 bg-gradient-to-b from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-            {Array.from({ length: 10 }).map((_, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-16 lg:gap-20 justify-items-center">
+            {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="w-24 h-24 md:w-32 md:h-32 rotate-45 rounded-lg bg-muted animate-pulse"
+                className="w-32 h-32 md:w-40 md:h-40 rotate-45 rounded-xl bg-muted animate-pulse"
               />
             ))}
           </div>
@@ -32,9 +47,9 @@ export function ChapterGrid({
   }
 
   return (
-    <section className="py-12 bg-gradient-to-b from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
+    <section className="py-16 bg-gradient-to-b from-amber-50/50 to-orange-50/30 dark:from-amber-950/20 dark:to-orange-950/10">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-16 lg:gap-20 justify-items-center">
           {chapters.map((chapter, index) => (
             <div
               key={chapter.id}
@@ -45,11 +60,19 @@ export function ChapterGrid({
                 chapter={chapter}
                 isSelected={selectedChapterId === chapter.id}
                 onSelect={onSelectChapter}
+                onPreview={handlePreview}
               />
             </div>
           ))}
         </div>
       </div>
+
+      <ChapterModal
+        chapter={previewChapter}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onOpenChapter={onSelectChapter}
+      />
     </section>
   );
 }

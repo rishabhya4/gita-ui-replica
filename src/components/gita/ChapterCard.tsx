@@ -5,19 +5,24 @@ interface ChapterCardProps {
   chapter: Chapter;
   isSelected: boolean;
   onSelect: (chapterId: number) => void;
+  onPreview: (chapter: Chapter) => void;
 }
 
-export function ChapterCard({ chapter, isSelected, onSelect }: ChapterCardProps) {
+export function ChapterCard({ chapter, isSelected, onSelect, onPreview }: ChapterCardProps) {
+  const handleClick = () => {
+    onPreview(chapter);
+  };
+
   return (
     <div
       className="diamond-card-wrapper"
-      onClick={() => onSelect(chapter.id)}
+      onClick={handleClick}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onSelect(chapter.id);
+          handleClick();
         }
       }}
       aria-pressed={isSelected}
@@ -39,14 +44,14 @@ export function ChapterCard({ chapter, isSelected, onSelect }: ChapterCardProps)
 
         {/* Chapter Number */}
         <div className="diamond-card-number">
-          <span className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
+          <span className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">
             {chapter.number}
           </span>
         </div>
 
         {/* Bottom Text */}
         <div className="diamond-card-text">
-          <p className="text-[8px] md:text-[10px] text-white/80 leading-tight text-center px-2 line-clamp-2">
+          <p className="text-[9px] md:text-xs text-white/90 leading-tight text-center px-3 line-clamp-1 font-medium">
             {chapter.transliteration}
           </p>
         </div>
