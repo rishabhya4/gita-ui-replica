@@ -11,11 +11,7 @@ import { Footer } from './Footer';
 import { fetchChapters, fetchVerses } from '@/data/gitaData';
 import type { Chapter, Verse } from '@/data/gitaData';
 
-interface GitaReaderProps {
-  bannerImage?: string;
-}
-
-export function GitaReader({ bannerImage }: GitaReaderProps) {
+export function GitaReader() {
   // Data states
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [verses, setVerses] = useState<Verse[]>([]);
@@ -93,7 +89,7 @@ export function GitaReader({ bannerImage }: GitaReaderProps) {
         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         className="flex flex-col gap-8"
       >
-        <HeroBanner bannerImage={bannerImage} />
+        <HeroBanner />
 
         <div className="space-y-12 pb-16">
           <ControlBar
