@@ -122,7 +122,7 @@ export function BookModal({ chapter, verses, isOpen, onClose }: BookModalProps) 
             opacity: 1,
             rotateX: 0,
             rotateY: 0,
-            transition: { duration: 0.5, ease: 'easeOut' }
+            transition: { duration: 0.5, ease: "easeOut" as const }
         },
         opening: {
             scale: 1,
@@ -146,7 +146,7 @@ export function BookModal({ chapter, verses, isOpen, onClose }: BookModalProps) 
         tilting: { rotateY: 0 },
         opening: {
             rotateY: -130,
-            transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
+            transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] as const }
         },
         open: { rotateY: -130 }
     };
@@ -157,7 +157,7 @@ export function BookModal({ chapter, verses, isOpen, onClose }: BookModalProps) 
         tilting: { rotateY: 0 },
         opening: {
             rotateY: 130,
-            transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
+            transition: { duration: 1.2, ease: [0.4, 0, 0.2, 1] as const }
         },
         open: { rotateY: 130 }
     };
