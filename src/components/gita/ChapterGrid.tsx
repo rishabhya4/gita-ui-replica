@@ -4,6 +4,7 @@ import { BookModal } from './BookModal';
 import type { Chapter, Verse } from '@/data/gitaData';
 import { fetchVerses } from '@/data/gitaData';
 import gitaBanner from '@/assets/gita-banner.jpg';
+import { motion } from 'framer-motion';
 
 interface ChapterGridProps {
   chapters: Chapter[];
@@ -64,29 +65,91 @@ export function ChapterGrid({
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+      scale: 0.8
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12
+      }
+    }
+  };
+
   return (
     <section className="py-16 relative overflow-hidden min-h-screen">
-      {/* Background Image with Opacity */}
-      <div
-        className="absolute inset-0 z-0 opacity-40 dark:opacity-20"
+      {/* Animated Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 animate-gradient-shift" />
+
+      {/* Background Image with Parallax Effect */}
+      <motion.div
+        className="absolute inset-0 z-0 opacity-30 dark:opacity-15"
         style={{
           backgroundImage: `url(${gitaBanner})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
         }}
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.5 }}
       />
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-amber-50/80 to-orange-50/60 dark:from-amber-950/80 dark:to-orange-950/60 backdrop-blur-[1px]" />
+      {/* Gradient Overlay with Animation */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-amber-50/90 via-orange-50/80 to-red-50/90 dark:from-amber-950/90 dark:to-orange-950/90 backdrop-blur-[2px]" />
+
+      {/* Floating Particles Effect */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-amber-400/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.5, 0.2],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-16 lg:gap-20 justify-items-center">
-          {chapters.map((chapter, index) => (
-            <div
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-16 lg:gap-20 justify-items-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {chapters.map((chapter) => (
+            <motion.div
               key={chapter.id}
-              className="animate-fade-up"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              variants={itemVariants}
             >
               <ChapterCard
                 chapter={chapter}
@@ -94,9 +157,9 @@ export function ChapterGrid({
                 onSelect={onSelectChapter}
                 onPreview={handlePreview}
               />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <BookModal

@@ -72,7 +72,7 @@ export function HeroSlider({ images, interval = 5000 }: HeroSliderProps) {
         </AnimatePresence>
 
         {/* Dark overlay for better text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
         {/* Content */}
         <div className="relative h-full container mx-auto px-4 flex flex-col items-center justify-center text-center">
