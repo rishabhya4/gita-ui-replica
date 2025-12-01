@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import type { Verse, Chapter } from '@/data/gitaData';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Play } from 'lucide-react';
+import { VerseVideoPlayer } from './VerseVideoPlayer';
 
 interface VersesTableProps {
   verses: Verse[];
@@ -9,6 +11,19 @@ interface VersesTableProps {
 }
 
 export function VersesTable({ verses, chapter, fontSize, isLoading }: VersesTableProps) {
+  const [selectedVerse, setSelectedVerse] = useState<Verse | null>(null);
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false);
+
+  const handlePlayVerse = (verse: Verse) => {
+    setSelectedVerse(verse);
+    setIsPlayerOpen(true);
+  };
+
+  const handleClosePlayer = () => {
+    setIsPlayerOpen(false);
+    setSelectedVerse(null);
+  };
+
   if (!chapter) {
     return (
       <section className="py-12">
@@ -81,11 +96,14 @@ export function VersesTable({ verses, chapter, fontSize, isLoading }: VersesTabl
                     <th className="px-4 sm:px-6 py-4 text-left text-sm font-semibold text-foreground">
                       Text
                     </th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold text-foreground w-24">
+                      Play
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/50">
                   {verses.map((verse) => (
-                    <tr key={verse.id} className="verse-row">
+                    <tr key={verse.id} className="verse-row hover:bg-muted/20 transition-colors">
                       <td className="px-4 sm:px-6 py-4 align-top">
                         <span className="inline-flex items-center justify-center w-12 h-8 rounded bg-primary/10 text-primary text-sm font-semibold">
                           {verse.verseNumber}
@@ -100,17 +118,26 @@ export function VersesTable({ verses, chapter, fontSize, isLoading }: VersesTabl
                           <p className="font-heading text-saffron-dark leading-relaxed">
                             {verse.sanskritText}
                           </p>
-                          
+
                           {/* Transliteration */}
                           <p className="sanskrit-text text-sm leading-relaxed">
                             {verse.transliteration}
                           </p>
-                          
+
                           {/* Translation */}
                           <p className="text-foreground leading-relaxed">
                             {verse.translation}
                           </p>
                         </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-4 align-top text-center">
+                        <button
+                          onClick={() => handlePlayVerse(verse)}
+                          className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl hover:scale-110"
+                          title="Play verse"
+                        >
+                          <Play className="w-5 h-5" />
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -120,6 +147,15 @@ export function VersesTable({ verses, chapter, fontSize, isLoading }: VersesTabl
           )}
         </div>
       </div>
+
+      {/* Video Player Modal */}
+      {selectedVerse && (
+        <VerseVideoPlayer
+          verse={selectedVerse}
+          isOpen={isPlayerOpen}
+          onClose={handleClosePlayer}
+        />
+      )}
     </section>
   );
 }

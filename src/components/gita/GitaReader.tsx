@@ -23,6 +23,7 @@ export function GitaReader() {
   const [isProjectorMode, setIsProjectorMode] = useState(false);
   const [isLoadingChapters, setIsLoadingChapters] = useState(true);
   const [isLoadingVerses, setIsLoadingVerses] = useState(false);
+  const [showChapterName, setShowChapterName] = useState(false);
 
   // Load chapters on mount
   useEffect(() => {
@@ -48,6 +49,12 @@ export function GitaReader() {
     setSelectedChapter(chapter);
     setIsLoadingVerses(true);
     setAudioUrl(null);
+
+    // Show chapter name overlay for 2 seconds
+    setShowChapterName(true);
+    setTimeout(() => {
+      setShowChapterName(false);
+    }, 2000);
 
     try {
       const versesData = await fetchVerses(chapterId);
@@ -129,6 +136,66 @@ export function GitaReader() {
         verses={verses}
         fontSize={fontSize}
       />
+
+      {/* Chapter Name Overlay - Shows for 2 seconds */}
+      {showChapterName && selectedChapter && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+        >
+          <motion.div
+            initial={{ scale: 0.8, y: 50, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.8, y: -50, opacity: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20
+            }}
+            className="text-center px-8 py-12 max-w-4xl"
+          >
+            {/* Chapter Number */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="text-8xl md:text-9xl font-bold text-amber-500 mb-6 drop-shadow-[0_0_30px_rgba(245,158,11,0.5)]"
+            >
+              {selectedChapter.number}
+            </motion.div>
+
+            {/* Chapter Title in Sanskrit */}
+            <motion.h2
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-4xl md:text-6xl font-heading font-light text-white mb-4 drop-shadow-lg"
+            >
+              {selectedChapter.title}
+            </motion.h2>
+
+            {/* Chapter Title in English */}
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-2xl md:text-3xl text-amber-200 font-heading italic drop-shadow-lg"
+            >
+              {selectedChapter.transliteration}
+            </motion.p>
+
+            {/* Decorative Line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="w-64 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-8"
+            />
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }

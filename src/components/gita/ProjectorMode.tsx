@@ -1,6 +1,7 @@
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import type { Verse, Chapter } from '@/data/gitaData';
+import { VerseVideoPlayer } from './VerseVideoPlayer';
 
 interface ProjectorModeProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export function ProjectorMode({
   fontSize,
 }: ProjectorModeProps) {
   const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false);
 
   const goToPrevious = useCallback(() => {
     setCurrentVerseIndex((prev) => (prev > 0 ? prev - 1 : prev));
@@ -28,6 +30,14 @@ export function ProjectorMode({
       prev < verses.length - 1 ? prev + 1 : prev
     );
   }, [verses.length]);
+
+  const handlePlayVerse = () => {
+    setIsPlayerOpen(true);
+  };
+
+  const handleClosePlayer = () => {
+    setIsPlayerOpen(false);
+  };
 
   // Keyboard navigation
   useEffect(() => {
@@ -89,13 +99,26 @@ export function ProjectorMode({
                   : 'No verses available'}
               </p>
             </div>
-            <button
-              onClick={onClose}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
-            >
-              <X className="w-4 h-4" />
-              <span className="hidden sm:inline">Exit Projector Mode</span>
-            </button>
+            <div className="flex items-center gap-3">
+              {/* Play Button */}
+              {currentVerse && (
+                <button
+                  onClick={handlePlayVerse}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl"
+                  title="Play verse"
+                >
+                  <Play className="w-4 h-4" />
+                  <span className="hidden sm:inline">Play</span>
+                </button>
+              )}
+              <button
+                onClick={onClose}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
+              >
+                <X className="w-4 h-4" />
+                <span className="hidden sm:inline">Exit Projector Mode</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -161,11 +184,10 @@ export function ProjectorMode({
                   <button
                     key={idx}
                     onClick={() => setCurrentVerseIndex(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                      idx === currentVerseIndex
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${idx === currentVerseIndex
                         ? 'bg-primary'
                         : 'bg-border hover:bg-muted-foreground'
-                    }`}
+                      }`}
                     aria-label={`Go to verse ${idx + 1}`}
                   />
                 ))}
@@ -187,6 +209,15 @@ export function ProjectorMode({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Video Player Modal */}
+      {currentVerse && (
+        <VerseVideoPlayer
+          verse={currentVerse}
+          isOpen={isPlayerOpen}
+          onClose={handleClosePlayer}
+        />
       )}
     </div>
   );

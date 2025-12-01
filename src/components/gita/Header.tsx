@@ -14,26 +14,30 @@ const navSections = [
     label: 'ĀYURVEDA',
     hasDropdown: true,
     items: [
-      { href: '#', label: 'Introduction' },
-      { href: '#', label: 'Principles' },
-      { href: '#', label: 'Treatments' },
-      { href: '#', label: 'Diet & Lifestyle' },
+      { href: '/ayurveda-introduction', label: 'Introduction' },
+      { href: '/ayurveda-timing', label: 'Timing' },
+      { href: '/daily-routines', label: 'Food' },
     ],
   },
   {
     label: 'YOGASŪTRAS',
     hasDropdown: true,
     items: [
-      { href: '#', label: 'Samādhi Pāda' },
-      { href: '#', label: 'Sādhana Pāda' },
-      { href: '#', label: 'Vibhūti Pāda' },
-      { href: '#', label: 'Kaivalya Pāda' },
+      { href: '/yoga-introduction', label: 'Introduction' },
+      { href: '/yoga-obstacles', label: 'Obstacles' },
+      { href: '/yoga-practice', label: 'Practice' },
+      { href: '/yogasana', label: 'Yogāsana' },
+      { href: '#', label: 'Glossary' },
     ],
   },
   {
     label: 'BHAGAVAD GĪTĀ',
-    hasDropdown: false,
-    href: '#',
+    hasDropdown: true,
+    items: [
+      { href: '/introduction', label: 'Introduction' },
+      { href: '/daily-routines', label: 'Daily Routines' },
+      { href: '/', label: 'Read Gita' },
+    ],
     active: true,
   },
   {
@@ -76,11 +80,11 @@ export function Header() {
     >
       {/* Top accent border with gradient animation */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-saffron via-gold to-saffron animate-gradient-x" />
-      
+
       <div className="container mx-auto px-4 md:px-6 py-2 relative z-10">
         <div className="flex h-14 md:h-16 items-center justify-between">
           {/* Logo */}
-          <motion.div 
+          <motion.div
             className="flex items-center gap-3"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400 }}
@@ -108,7 +112,7 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {/* Search Icon */}
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.1, backgroundColor: 'hsl(var(--muted))' }}
               whileTap={{ scale: 0.95 }}
               className="p-2.5 rounded-full transition-all duration-200 mr-2 text-muted-foreground hover:text-primary"
@@ -126,14 +130,14 @@ export function Header() {
                     </span>
                     <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent 
-                    align="start" 
+                  <DropdownMenuContent
+                    align="start"
                     className="min-w-[180px] bg-card/95 backdrop-blur-xl border-border/50 shadow-elevated"
                   >
                     {section.items?.map((item) => (
                       <DropdownMenuItem key={item.label} asChild>
-                        <a 
-                          href={item.href} 
+                        <a
+                          href={item.href}
                           className="cursor-pointer hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary transition-colors"
                         >
                           {item.label}
@@ -148,16 +152,14 @@ export function Header() {
                   href={section.href}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 relative group ${
-                    section.active
-                      ? 'text-primary'
-                      : 'text-muted-foreground hover:text-primary'
-                  }`}
+                  className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 relative group ${section.active
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-primary'
+                    }`}
                 >
                   {section.label}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                    section.active ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${section.active ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`} />
                 </motion.a>
               )
             )}
@@ -220,7 +222,7 @@ export function Header() {
 
               <div className="flex flex-col pb-4">
                 {navSections.map((section, index) => (
-                  <motion.div 
+                  <motion.div
                     key={section.label}
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -270,11 +272,10 @@ export function Header() {
                     ) : (
                       <a
                         href={section.href}
-                        className={`block px-4 py-3 text-sm font-medium transition-colors ${
-                          section.active
-                            ? 'text-primary bg-primary/10 border-l-2 border-primary'
-                            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                        }`}
+                        className={`block px-4 py-3 text-sm font-medium transition-colors ${section.active
+                          ? 'text-primary bg-primary/10 border-l-2 border-primary'
+                          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                          }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {section.label}
@@ -287,7 +288,7 @@ export function Header() {
           )}
         </AnimatePresence>
       </div>
-      
+
       {/* Bottom border with subtle glow */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
     </motion.header>
