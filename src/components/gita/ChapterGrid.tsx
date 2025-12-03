@@ -101,7 +101,7 @@ export function ChapterGrid({
 
       {/* Background Image with Parallax Effect */}
       <motion.div
-        className="absolute inset-0 z-0 opacity-30 dark:opacity-15"
+        className="absolute inset-0 z-0 opacity-50 dark:opacity-25"
         style={{
           backgroundImage: `url(${gitaBanner})`,
           backgroundSize: 'cover',
