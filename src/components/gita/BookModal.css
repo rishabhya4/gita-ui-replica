@@ -52,9 +52,9 @@
     perspective: 2500px;
     perspective-origin: center center;
     width: 100%;
-    max-width: 1200px;
-    height: 800px;
-    /* Increased height for larger book */
+    max-width: 1000px;
+    height: 550px;
+    /* Reduced height to ensure buttons are visible */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,10 +63,10 @@
 /* 3D Book Container */
 .book-3d {
     position: relative;
-    width: 1000px;
-    /* Increased width */
-    height: 700px;
-    /* Increased height */
+    width: 800px;
+    /* Reduced width for better fit */
+    height: 500px;
+    /* Reduced height for better fit */
     transform-style: preserve-3d;
     transform-origin: center center;
 }
@@ -608,45 +608,45 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .book-3d {
-        width: 700px;
+        width: 600px;
         /* Adjusted for tablet */
-        height: 500px;
+        height: 400px;
     }
 
     .book-wrapper {
-        height: 600px;
+        height: 450px;
     }
 
     .book-cover-number {
-        font-size: 5rem;
+        font-size: 4rem;
     }
 
     .book-cover-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     .book-content-page {
-        padding: 2.5rem 2rem;
+        padding: 2rem 1.5rem;
     }
 
     .verse-sanskrit {
-        font-size: 1.375rem;
+        font-size: 1.25rem;
     }
 
     .verse-translation {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
     }
 }
 
 @media (max-width: 480px) {
     .book-3d {
-        width: 500px;
+        width: 400px;
         /* Adjusted for mobile */
-        height: 400px;
+        height: 320px;
     }
 
     .book-wrapper {
-        height: 500px;
+        height: 380px;
     }
 
     .book-cover-number {
