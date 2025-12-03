@@ -3,7 +3,7 @@ import { ChapterCard } from './ChapterCard';
 import { BookModal } from './BookModal';
 import type { Chapter, Verse } from '@/data/gitaData';
 import { fetchVerses } from '@/data/gitaData';
-import gitaBanner from '@/assets/gita-banner.jpg';
+import bgImage from '@/assets/BG.jpg';
 import { motion } from 'framer-motion';
 
 interface ChapterGridProps {
@@ -101,9 +101,9 @@ export function ChapterGrid({
 
       {/* Background Image with Parallax Effect */}
       <motion.div
-        className="absolute inset-0 z-0 opacity-80 dark:opacity-50"
+        className="absolute inset-0 z-0 opacity-50 dark:opacity-25"
         style={{
-          backgroundImage: `url(${gitaBanner})`,
+          backgroundImage: `url(${bgImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
