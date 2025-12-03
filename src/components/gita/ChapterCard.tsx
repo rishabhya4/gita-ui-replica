@@ -27,7 +27,7 @@ export function ChapterCard({ chapter, isSelected, onSelect, onPreview }: Chapte
         stiffness: 300,
         damping: 20
       }}
-      className="relative w-32 h-40 md:w-36 md:h-44 bg-white rounded-lg overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_20px_50px_rgba(245,158,11,0.4)] transition-all duration-500 cursor-pointer group perspective-1000"
+      className="relative w-28 h-36 md:w-32 md:h-40 bg-white rounded-lg overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_20px_50px_rgba(245,158,11,0.4)] transition-all duration-500 cursor-pointer group perspective-1000"
       onClick={handleClick}
       role="button"
       tabIndex={0}
