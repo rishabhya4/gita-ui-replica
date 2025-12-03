@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Chapter, Verse } from '@/data/gitaData';
-import gitaBanner from '@/assets/gita-banner.jpg';
 import './BookModal.css';
 
 interface BookModalProps {
@@ -179,15 +178,6 @@ export function BookModal({ chapter, verses, isOpen, onClose }: BookModalProps) 
             {isOpen && (
                 <motion.div
                     className="book-modal-overlay"
-                    style={{
-                        backgroundImage: `
-                            linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.75)),
-                            url(${gitaBanner})
-                        `,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat'
-                    }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
